@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ChakraUiProvider } from './ChakraUiProvider'
-import { Flex } from '@chakra-ui/react'
+import { Center } from '@chakra-ui/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,15 +19,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ChakraUiProvider>
-          <Flex
-            justifyContent='center' 
-            alignItems='center'
-            w="100vw"
+          <Center
             h="100vh"
-            background="#f6f6f6f6"
+            background="#efefef"
           >
             {children}
-          </Flex>
+          </Center>
         </ChakraUiProvider>
       </body>
     </html>

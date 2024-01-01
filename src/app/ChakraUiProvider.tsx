@@ -2,6 +2,8 @@
 
 import React from "react";
 
+import "./font.css"
+
 import { CacheProvider } from "@chakra-ui/next-js";
 import { ChakraProvider } from "@chakra-ui/react";
 
