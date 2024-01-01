@@ -1,0 +1,8 @@
+{
+    "material-icon-theme.folders.associations": {
+        "_components" : "Components",
+        "(route)": "Routes",
+        "_server": "Server",
+        "_client": "Client"
+    }
+}
