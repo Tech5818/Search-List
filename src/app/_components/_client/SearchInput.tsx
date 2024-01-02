@@ -20,6 +20,7 @@ export const SearchInput = () => {
                 onChange={(e) => {
                     setSearch(e.target.value)
                 }}
+                boxShadow="2px 2px 4px rgba(0, 0, 0, 0.4)"
             />
         </>
     )

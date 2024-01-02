@@ -2,7 +2,8 @@ import {Center} from "@chakra-ui/react";
 import { Logo } from "./Logo";
 import { SearchBar } from "./SearchBar";
 
-export const Container = () => {
+export const IndexContainer = () => {
+
     return (
         <>
             <Center

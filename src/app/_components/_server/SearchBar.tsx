@@ -2,14 +2,13 @@ import { Stack, FormControl, Button } from "@chakra-ui/react";
 import { SearchInput } from "../_client/SearchInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
+import { SearchForm } from "../_client/SearchForm";
 
 export const SearchBar = () => {
+
     return(
         <>
-            <Stack 
-                as="form" 
-                spacing={4}
-            >
+            <SearchForm>
                 <FormControl 
                     display="flex" 
                     alignItems="center"
@@ -29,7 +28,7 @@ export const SearchBar = () => {
                         />
                     </Button>
                 </FormControl>
-            </Stack>
+            </SearchForm>
         </>
     )
 }

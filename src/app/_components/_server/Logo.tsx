@@ -11,10 +11,11 @@ export const Logo: React.FC<LogoType> = ({type = null}) => {
         <>
             {(type === null && type !== "small") ? (
                 <Heading
-                    fontSize={80}
+                    fontSize={100}
                     fontFamily='Dancing Script'
                     cursor="pointer"
                     userSelect="none"
+                    textShadow="2px 2px 4px rgba(0, 0, 0, 0.4)"
                 >
                     Search List
                 </Heading>

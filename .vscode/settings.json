@@ -3,6 +3,7 @@
         "_components" : "Components",
         "(route)": "Routes",
         "_server": "Server",
-        "_client": "Client"
+        "_client": "Client",
+        "_apis" : "API"
     }
 }

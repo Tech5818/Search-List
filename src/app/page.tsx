@@ -1,10 +1,10 @@
-import { Container } from "./_components/_server/Container";
+import { IndexContainer } from "./_components/_server/IndexContainer";
 
 
 export default function Home() {
   return (
     <>
-      <Container/>
+      <IndexContainer/>
     </>
   )
 }
