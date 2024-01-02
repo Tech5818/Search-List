@@ -1,5 +1,6 @@
 import {Center} from "@chakra-ui/react";
 import { Logo } from "./Logo";
+import { SearchBar } from "./SearchBar";
 
 export const Container = () => {
     return (
@@ -10,9 +11,11 @@ export const Container = () => {
                 minH="85vh"
                 background="#fff"
                 boxShadow="0 0 10px rgba(0, 0, 0, 0.2)"
+                flexFlow="column"
+                gap="80px"
             >
-                <Logo type="small"
-                />
+                <Logo />
+                <SearchBar />
             </Center>
         </>
     )

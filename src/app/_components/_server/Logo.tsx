@@ -11,7 +11,7 @@ export const Logo: React.FC<LogoType> = ({type = null}) => {
         <>
             {(type === null && type !== "small") ? (
                 <Heading
-                    size="4xl"
+                    fontSize={80}
                     fontFamily='Dancing Script'
                     cursor="pointer"
                     userSelect="none"
