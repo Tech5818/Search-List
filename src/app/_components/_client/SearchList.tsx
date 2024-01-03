@@ -4,7 +4,7 @@ import { Box, Button, Flex, Heading, Skeleton, Text } from "@chakra-ui/react";
 
 import { useSearchParams } from "next/navigation";
 import { SearchResult, SearchResultItems, getSearchDatas } from "../../_apis/Naver/getSearchDatas";
-import { useEffect, useState } from "react";
+import { MutableRefObject, RefObject, useEffect, useRef, useState } from "react";
 import { SearchListItem } from "../_server/SearchListItem";
 import { SearchResultSkeleton } from "../_server/SearchResultSkeleton";
 import { getMoreDatas } from "../../_apis/Naver/getMoreDatas";
@@ -18,6 +18,8 @@ export const SearchList = () => {
     const display: number | null = Number(prams.get("display"));
 
     const [start, setStart] = useState<number> (display + 1);
+
+    const ListRef = useRef(null);
 
     const fetchData = async () => {
         try {
@@ -33,13 +35,13 @@ export const SearchList = () => {
 
     const fetchMoreData = async () => {
         try {
-            const result: SearchResult = await getMoreDatas(query!, 5, start!);
+            const result: SearchResult = await getMoreDatas(query!, 10, start!);
 
             const items: SearchResultItems[] = result.items;
             const newItems: SearchResultItems[] = removeString(items);
 
             setData((prev) => [...prev, ...newItems]);
-            setStart(start + 5);
+            setStart(start + 10);
             
         } catch(error) {
             throw error;
@@ -63,6 +65,26 @@ export const SearchList = () => {
         })
         return items;
     }
+
+    const callback = (entries: IntersectionObserverEntry[]) => {
+        if (entries[0].isIntersecting) {
+            fetchMoreData();
+        }
+    };
+
+    const options = {
+        threshold: 1.0,
+    };
+
+    useEffect(() => {
+        if (ListRef.current) {
+            const observer = new IntersectionObserver(callback, options);
+            observer.observe(ListRef.current);
+            return () => {
+                observer.disconnect();
+            };
+        }
+    }, [ListRef.current, data]);
 
     useEffect(() => {
         if (data.length === 0) {
@@ -100,19 +122,20 @@ export const SearchList = () => {
                             <Box
                                 key={idx}
                             >
-                                <SearchListItem
-                                    element={element}
-                                />
+                                {data.length === idx + 1 ? (
+                                        <SearchListItem
+                                            element={element}
+                                            ref={ListRef}
+                                        />
+                                    ) : (
+                                        <SearchListItem
+                                            element={element}
+                                        />
+                                    )
+                                }
                             </Box>
                         ))
                     }
-                    <Button
-                        onClick={() => {
-                            fetchMoreData();
-                        }}
-                    >
-                        More Data
-                    </Button>
                 </Flex>
             ) : (
                 <SearchResultSkeleton />

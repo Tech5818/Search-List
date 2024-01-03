@@ -1,6 +1,7 @@
 
 import { Flex, Heading, Text } from "@chakra-ui/react"
 import Link from "next/link"
+import { forwardRef } from "react"
 
 interface SearchListItemProps {
     element: {
@@ -10,7 +11,7 @@ interface SearchListItemProps {
     }
 }
 
-export const SearchListItem = ({element}: SearchListItemProps) => {
+export const SearchListItem = forwardRef<HTMLDivElement, SearchListItemProps>(({element}, ref) => {
     return (
         <Flex
             background="#fafafa"
@@ -19,6 +20,7 @@ export const SearchListItem = ({element}: SearchListItemProps) => {
             boxShadow="0 0 4px rgba(0, 0, 0, 0.4)"
             flexFlow="column"
             gap="5px"
+            ref={ref}
         >
             <Link
                 href={element.link}
@@ -48,4 +50,4 @@ export const SearchListItem = ({element}: SearchListItemProps) => {
             </Text>
         </Flex>
     )
-}
+})
