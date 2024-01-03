@@ -1,47 +1,74 @@
 "use client";
 
-import { Box, Flex, Heading, Skeleton, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Skeleton, Text } from "@chakra-ui/react";
 
 import { useSearchParams } from "next/navigation";
 import { SearchResult, SearchResultItems, getSearchDatas } from "../../_apis/Naver/getSearchDatas";
 import { useEffect, useState } from "react";
+import { SearchListItem } from "../_server/SearchListItem";
+import { SearchResultSkeleton } from "../_server/SearchResultSkeleton";
+import { getMoreDatas } from "../../_apis/Naver/getMoreDatas";
 
 export const SearchList = () => {
-    const [data, setData] = useState<SearchResultItems[]> ();
+    const [data, setData] = useState<SearchResultItems[]> ([]);
     const [isLoading, setIsLoading] = useState<boolean> (false);
     const prams = useSearchParams();
 
     const query: string | null = prams.get("query");
-    const display: string | null = prams.get("display");
+    const display: number | null = Number(prams.get("display"));
+
+    const [start, setStart] = useState<number> (display + 1);
 
     const fetchData = async () => {
         try {
             const result: SearchResult  = await getSearchDatas(query!, display!);
 
             const items: SearchResultItems[] = result.items;
-            items.forEach((e) => {
-                e.title = e.title.replace("<b>", "");
-                e.title = e.title.replace("</b>", "");
-                const description_count: number | undefined = e.description.match(/<b>/g)?.filter(item => item !== "").length;
-                console.log(description_count);
-                
-                for (let i = 0; i < description_count!; i ++) {
-                    e.description = e.description.replace("<b>", "");
-                    e.description = e.description.replace("</b>", "");
-                }
-            })
-            setData(items);
+            const newItems: SearchResultItems[] = removeString(items);
+            setData(newItems);
         } catch (error) {
             throw error
         }
     }
 
+    const fetchMoreData = async () => {
+        try {
+            const result: SearchResult = await getMoreDatas(query!, 5, start!);
+
+            const items: SearchResultItems[] = result.items;
+            const newItems: SearchResultItems[] = removeString(items);
+
+            setData((prev) => [...prev, ...newItems]);
+            setStart(start + 5);
+            
+        } catch(error) {
+            throw error;
+        }
+    }
+
+    const removeString = (items: SearchResultItems[]) => {
+        items.forEach((e) => {
+            const title_count: number | undefined = e.title.match(/<b>/g)?.filter(item => item !== "").length;
+
+            for (let i = 0; i < title_count!; i++) {
+                e.title = e.title.replace("<b>", "");
+                e.title = e.title.replace("</b>", "");
+            }
+            const description_count: number | undefined = e.description.match(/<b>/g)?.filter(item => item !== "").length;
+            
+            for (let i = 0; i < description_count!; i ++) {
+                e.description = e.description.replace("<b>", "");
+                e.description = e.description.replace("</b>", "");
+            }
+        })
+        return items;
+    }
+
     useEffect(() => {
-        if (data === undefined) {
+        if (data.length === 0) {
             fetchData();
             setIsLoading(true);
         }
-        console.log(data);
     },[data])
 
     return(
@@ -72,64 +99,23 @@ export const SearchList = () => {
                         data?.map((element, idx) => (
                             <Box
                                 key={idx}
-                                background="#fafafa"
-                                p="20px"
-                                w="100%"
-                                boxShadow="0 0 4px rgba(0, 0, 0, 0.4)"
                             >
-                                <Heading
-                                    as="h5"
-                                    size="md"
-                                    overflow="hidden"
-                                    whiteSpace="nowrap"
-                                    textOverflow="ellipsis"
-                                >
-                                    {element.title}
-                                </Heading>
-                                <Text>
-                                    {element.description}
-                                </Text>
+                                <SearchListItem
+                                    element={element}
+                                />
                             </Box>
                         ))
                     }
+                    <Button
+                        onClick={() => {
+                            fetchMoreData();
+                        }}
+                    >
+                        More Data
+                    </Button>
                 </Flex>
             ) : (
-                <Flex
-                    w="100%"
-                    gap="20px"
-                    flexFlow="column"
-                    p="5px 10px"
-                    h="calc(85vh - 80px - 20px)"
-                >
-                    <Skeleton 
-                        w="100%"
-                        h="136px"
-                    />
-                    <Skeleton 
-                        w="100%"
-                        h="136px"
-                    />
-                    <Skeleton 
-                        w="100%"
-                        h="136px"
-                    />
-                    <Skeleton 
-                        w="100%"
-                        h="136px"
-                    />
-                    <Skeleton 
-                        w="100%"
-                        h="136px"
-                    />
-                    <Skeleton 
-                        w="100%"
-                        h="136px"
-                    />
-                    <Skeleton 
-                        w="100%"
-                        h="136px"
-                    />
-                </Flex>
+                <SearchResultSkeleton />
             )}
         </>
     )

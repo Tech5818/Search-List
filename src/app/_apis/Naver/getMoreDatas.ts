@@ -20,9 +20,9 @@ export interface SearchResultItems {
     postdate: string
 }
 
-export const getSearchDatas = (query: string, display: number): Promise<SearchResult> => {
+export const getMoreDatas = (query: string, display: number, start: number): Promise<SearchResult> => {
     try {
-        const api_uri = `/v1/search/blog?query=${encodeURIComponent(query)}&display=${encodeURIComponent(display)}`;
+        const api_uri = `/v1/search/blog?query=${encodeURIComponent(query)}&display=${encodeURIComponent(display)}&start=${encodeURIComponent(start)}`;
         const options = {
             headers: {
                 "X-Naver-Client-Id" : client_id || "",
