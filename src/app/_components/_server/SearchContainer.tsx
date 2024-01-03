@@ -13,7 +13,7 @@ export const SearchContainer = () => {
                 background="#fff"
                 boxShadow="0 0 10px rgba(0, 0, 0, 0.2)"
                 flexFlow="column"
-                gap="80px"
+                gap="20px"
                 alignItems="center"
                 p="40px"
             >

@@ -12,7 +12,7 @@ export const SearchForm = ({ children }: { children: React.ReactNode }) => {
     const handleSubmit = (e: FormEvent<HTMLDivElement>) => {
         e.preventDefault();
 
-        router.push(`/search?query=${search}`);
+        router.push(`/search?query=${search}&display=20`);
     }
     return(
         <>
