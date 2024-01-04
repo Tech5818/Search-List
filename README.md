@@ -1,36 +1,17 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## PROJECT(Search LIst)
 
-## Getting Started
+### 프레임워크
+- **NEXT JS 13**
 
-First, run the development server:
+### 스타일링 라이브러리
+- **Chakra UI**(**CSS-IN-JS** 방식이므로 **NEXT JS 13**가 추구하는 **SSR**과 맞지 않음 )
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### API
+- **Naver Search API**(Blog 검색 기록을 불러옴)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 의도
+- **NEXT JS 13**을 사용하면서 **SSR**의 개념과 **Naver Search API**를 사용하여 검색 내용을 무한 스크롤을 통해 구현 하는 웹페이지를 만들고 싶었음.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### 결과
+- **NEXT JS 13**은 SSR을 주로 하는데 반해 스타일링을 할 때 **CSS-IN-JS** 방식의 스타일링 라이브러리인 **Chakra UI**를 사용하여 결국 SSR의 이점을 이용하지 못함. (**치명적**)
+- **Naver Search API**를 활용하여 API가 제공하는 데이터를 대부분 불러오고 가공할 수 있었고, 데이터를 불러오며 무한 스크롤을 구현함.
